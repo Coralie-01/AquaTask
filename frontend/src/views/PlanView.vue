@@ -8,12 +8,10 @@
     </div> 
     <div class="drawer-side">
       <label for="my-drawer-2" class="drawer-overlay"></label> 
-      <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
+      <ul class="menu items-center w-80 h-full bg-base-200 text-base-content">
         <!-- Sidebar content here -->
-        <VDatePicker v-model="selectedDate" mode="date"/>
-        <li><a>{{ formattedDate }} </a></li>
+        <VDatePicker v-model="selectedDate" mode="date" class="my-6 px-2"/>
       </ul>
-    
     </div>
   </div>
 </template>
