@@ -1,23 +1,29 @@
 <template>
   <div class="navbar bg-secondary text-neutral-content">
     <div class="flex-1">
-      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn text-xl">
-        <img
-          src="/src/assets/logo.png"
-          style="width: 6.80806rem; height: 3.6875rem; flex-shrink: 0"
-        />
-        AquaTask
-      </router-link>
+      <img
+        src="/src/assets/logo.png"
+        style="width: 6.80806rem; height: 3.6875rem; flex-shrink: 0"
+      />
+      <router-link to="/" class="btn btn-ghost normal-case text-xl">AquaTask</router-link>
     </div>
     <div class="flex-none">
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full">
-            <i class="fi fi-rr-user icon"></i>
+          <router-link to="/auth" v-if="!userStore.loggedIn">
+            <div class="w-10 rounded-full">
+              <i class="fi fi-rr-user icon"></i>
+            </div>
+          </router-link>
+          <div v-else>
+            <div class="w-10 rounded-full">
+              <i class="fi fi-rr-user icon"></i>
+            </div>
           </div>
         </label>
         <ul
           tabindex="0"
+          v-if="userStore.loggedIn"
           class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
@@ -27,12 +33,21 @@
             </a>
           </li>
           <li><a>Settings</a></li>
-          <li><a>Logout</a></li>
+          <button @click="logout"><a>Logout</a></button>
         </ul>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useUserStore } from '../store/user'
+
+const userStore = useUserStore()
+function logout() {
+  userStore.logout()
+}
+</script>
 
 <style>
 .icon {
