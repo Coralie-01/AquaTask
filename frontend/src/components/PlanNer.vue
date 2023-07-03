@@ -12,7 +12,7 @@ import AddTask from './tasks/AddTask.vue';
 
 defineProps({
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
 });
