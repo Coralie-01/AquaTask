@@ -10,17 +10,22 @@ This template should help get you started developing with Vue 3 in Vite.
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Backend Setup
 
-```sh
-npm install
-```
+This project uses Flask for the backend. To set up and run the Flask server:
 
-### Compile and Hot-Reload for Development
+1. Navigate to the backend directory: `cd backend`
+2. Install the required Python packages: `pip install -r requirements.txt`
+3. Run the Flask server: `flask run`
 
-```sh
-npm run dev
-```
+## Frontend Setup
+
+1. Navigate to the frontend directory: `cd frontend`
+2. Install the required Node.js packages: `npm install`
+3. Run the Vue server: `npm run dev`
+
+To handle both servers at the same time you can also use `npm run start` from the frontend directoty.
+
 
 ### Compile and Minify for Production
 
