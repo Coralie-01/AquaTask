@@ -10,8 +10,13 @@
       </router-link>
     </div>
     <AddTask class="my-8"></AddTask>
+    <div v-if="showDone" class="flex flex-col gap-4">
+      <p class="text-xl">Done</p>
+      <TaskItem v-for="task in doneTasks" :key="task.id" :task="task"></TaskItem>
+    </div>
     <div class="flex flex-col gap-4">
-      <TaskItem v-for="task in tasks" :key="task.id" :task="task.description"></TaskItem>
+      <p class="text-xl">To do</p>
+      <TaskItem v-for="task in tasks" :key="task.id" :task="task"></TaskItem>
     </div>
   </div>
 </template>
@@ -22,6 +27,9 @@ import AddTask from './tasks/AddTask.vue'
 import axios from 'axios'
 import { useTasksStore } from '../store/tasks'
 import TaskItem from './tasks/TaskItem.vue'
+import { computed } from 'vue'
+
+const showDone = computed(() => doneTasks.value.length > 0)
 
 defineProps({
   date: {
@@ -39,9 +47,10 @@ onMounted(async () => {
 
     // Check if userId is not null
     if (userId) {
-      const response = await axios.get(`http://localhost:5000/get/tasks?user_id=${userId}`)
-      console.log(response)
+      const response = await axios.get(`http://localhost:5000/get/todo?user_id=${userId}`)
       tasksStore.setTasks(response.data.tasks)
+      const doneResponse = await axios.get(`http://localhost:5000/get/donetasks?user_id=${userId}`)
+      tasksStore.setDoneTasks(doneResponse.data.tasks)
     } else {
       console.error('User ID is not set')
     }
@@ -57,5 +66,14 @@ watch(
   }
 )
 
+watch(
+  () => tasksStore.donetasks,
+  (newDoneTasks) => {
+    doneTasks.value = newDoneTasks
+  }
+)
+
 const tasks = ref(tasksStore.tasks)
+const doneTasks = ref(tasksStore.donetasks)
+
 </script>

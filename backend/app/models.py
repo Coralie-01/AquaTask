@@ -27,3 +27,26 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Foreign key to link the task to a user
     description = db.Column(db.String(80), nullable=False)
+    category = db.Column(db.String(80), nullable=True)
+    due_date = db.Column(db.DateTime, nullable=True)
+    done = db.Column(db.Boolean, default=False)
+
+    # Method to get the task as a dictionary
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'description': self.description,
+            'category': self.category,
+            'due_date': self.due_date,
+            'done': self.done
+        }
+    
+    # Set task as done
+    def set_done(self):
+        self.done = True
+
+    # Set task as not done
+    def set_not_done(self):
+        self.done = False
+

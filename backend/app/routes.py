@@ -3,21 +3,6 @@ from app import app, db
 from app.models import Task, User
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Define a route for creating tasks, which accepts POST requests
-@app.route('/tasks', methods=['POST'])
-def create_task():
-    try:
-        data = request.get_json() # Get data from POST request
-        user_id = data['user_id']
-        desc = data['description']
-        task = Task(description=desc,user_id=user_id) # Create task
-        db.session.add(task) # Add task to database
-        db.session.commit() # Commit changes
-        return jsonify({'id' : task.id, 'description' : desc }) # Return the description of the task and its ID
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return jsonify({'message': 'An error occurred'}), 500
-
 # Define a route for register a user
 @app.route('/register', methods=['POST'])
 def register():
@@ -67,17 +52,66 @@ def auth():
         print(f"An error occurred: {e}")
         return jsonify({'message': 'An error occurred'}), 500
 
- # Define a route for getting tasks, which accepts GET requests
-@app.route('/get/tasks', methods=['GET'])
+
+
+
+# Define a route for creating tasks, which accepts POST requests
+@app.route('/tasks', methods=['POST'])
+def create_task():
+    try:
+        data = request.get_json() # Get data from POST request
+        user_id = data['user_id']
+        desc = data['description']
+        task = Task(description=desc,user_id=user_id) # Create task
+        db.session.add(task) # Add task to database
+        db.session.commit() # Commit changes
+        return jsonify(task.as_dict) # Return the description of the task and its ID
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'An error occurred'}), 500
+
+
+ # Define a route for getting undone tasks, which accepts GET requests
+@app.route('/get/todo', methods=['GET'])
 def get_tasks():
     try:
         user_id = request.args.get('user_id') # Get user_id from GET request
-        tasks = Task.query.filter_by(user_id=user_id).all() # Get all tasks for the user
+        tasks = Task.query.filter_by(user_id=user_id,done=False).all() # Get all tasks for the user
         task_list = [] # Create an empty list to store the tasks
         for task in tasks:
-            task_list.append({'id': task.id, 'description': task.description}) # Add each task to the list
+            task_list.append(task.as_dict()) # Add each task to the list
         print(f"Tasks: {task_list}")
         return jsonify({'tasks': task_list}) # Return the list of tasks
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'An error occurred'}), 500
+    
+# Define a route for getting done tasks, which accepts GET requests
+@app.route('/get/donetasks', methods=['GET'])
+def get_done_tasks():
+    try:
+        user_id = request.args.get('user_id') # Get user_id from GET request
+        tasks = Task.query.filter_by(user_id=user_id,done=True).all() # Get all tasks for the user
+        task_list = [] # Create an empty list to store the tasks
+        for task in tasks:
+            task_list.append(task.as_dict()) # Add each task to the list
+        print(f"Tasks: {task_list}")
+        return jsonify({'tasks': task_list}) # Return the list of tasks
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'An error occurred'}), 500
+    
+# Define a route for updating tasks as done, which accepts PUT requests
+@app.route('/updatetask', methods=['PUT'])
+def update_task():
+    try:
+        data = request.get_json() # Get data from PUT request
+        task_id = data['id']
+        done_bool = data['done']
+        task = Task.query.filter_by(id=task_id).first() # Get the task from the database
+        task.done = done_bool # Update the task as done or unddone
+        db.session.commit() # Commit changes
+        return jsonify(task.as_dict()), 200
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'message': 'An error occurred'}), 500
