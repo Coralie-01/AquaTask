@@ -26,7 +26,7 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/store/user'
+import { useTasksStore } from '../../store/tasks'
 
 const showForm = ref(false)
 const placeholderText = ref('Add a task')
@@ -38,14 +38,16 @@ function handlefocus() {
 }
 
 async function addTask() {
-  console.log('add task')
   try {
     console.log(task.value)
     const response = await axios.post('http://localhost:5000/tasks', {
       description: task.value,
-      user_id: useUserStore().user_id
+      user_id: localStorage.getItem('userId')
     })
-    console.log(response)
+    useTasksStore().addTask(response.data)
+    placeholderText.value = 'Add a task'
+    showForm.value = false
+    task.value = ''
   } catch (error) {
     console.error(error)
   }

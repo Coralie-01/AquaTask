@@ -56,7 +56,9 @@ async function signin() {
       password: password.value
     })
     if (response.status === 200) {
-      useUserStore().login(response.data.user_id)
+      // Store user ID in localStorage
+      localStorage.setItem('userId', response.data.user_id)
+      useUserStore().login()
       router.push('/')
     }
   } catch (error) {

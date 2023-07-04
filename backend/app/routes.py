@@ -13,7 +13,7 @@ def create_task():
         task = Task(description=desc,user_id=user_id) # Create task
         db.session.add(task) # Add task to database
         db.session.commit() # Commit changes
-        return jsonify({'message': 'Task created!'}) # Return success message
+        return jsonify({'id' : task.id, 'description' : desc }) # Return the description of the task and its ID
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'message': 'An error occurred'}), 500
@@ -67,4 +67,17 @@ def auth():
         print(f"An error occurred: {e}")
         return jsonify({'message': 'An error occurred'}), 500
 
-
+ # Define a route for getting tasks, which accepts GET requests
+@app.route('/get/tasks', methods=['GET'])
+def get_tasks():
+    try:
+        user_id = request.args.get('user_id') # Get user_id from GET request
+        tasks = Task.query.filter_by(user_id=user_id).all() # Get all tasks for the user
+        task_list = [] # Create an empty list to store the tasks
+        for task in tasks:
+            task_list.append({'id': task.id, 'description': task.description}) # Add each task to the list
+        print(f"Tasks: {task_list}")
+        return jsonify({'tasks': task_list}) # Return the list of tasks
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'An error occurred'}), 500
