@@ -45,6 +45,7 @@
 <script setup>
 import { useUserStore } from '../store/user'
 import { useTasksStore } from '../store/tasks'
+import { onMounted } from 'vue'
 
 const userStore = useUserStore()
 const tasksStore = useTasksStore()
@@ -54,6 +55,12 @@ function logout() {
   tasksStore.clearTasks()
   userStore.logout()
 }
+// keep user logged in if page is refreshed
+onMounted(() => {
+  if (localStorage.getItem('userId')) {
+    userStore.login()
+  }
+})
 </script>
 
 <style>
