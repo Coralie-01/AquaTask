@@ -12,7 +12,7 @@
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <router-link to="/auth" v-if="!userStore.loggedIn">
             <div class="w-10 rounded-full">
-              <i class="fi fi-rr-user icon"></i>
+              <i class="fi fi-sr-enter icon"></i>
             </div>
           </router-link>
           <div v-else>
@@ -24,7 +24,7 @@
         <ul
           tabindex="0"
           v-if="userStore.loggedIn"
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black"
         >
           <li>
             <a class="justify-between">
@@ -33,7 +33,9 @@
             </a>
           </li>
           <li><a>Settings</a></li>
-          <button @click="logout"><a>Logout</a></button>
+          <li>
+            <button @click="logout"><a>Logout</a></button>
+          </li>
         </ul>
       </div>
     </div>
@@ -42,9 +44,14 @@
 
 <script setup>
 import { useUserStore } from '../store/user'
+import { useTasksStore } from '../store/tasks'
 
 const userStore = useUserStore()
+const tasksStore = useTasksStore()
+
 function logout() {
+  localStorage.removeItem('userId')
+  tasksStore.clearTasks()
   userStore.logout()
 }
 </script>
