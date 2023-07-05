@@ -1,8 +1,8 @@
 <template>
   <div class="py-2">
-    <div class="flex items-center cursor-pointer shadow-lg bg-base-200 px-2 py-2">
+    <div class="flex items-center cursor-pointer bg-base-200 shadow-lg px-2 py-2" :class="category">
       <input v-model="checked" type="checkbox" checked="checked" class="checkbox m-3" />
-      <div type="text" class="w-full bg-base-200">{{ task.description }}</div>
+      <div type="text" class="w-full ">{{ task.description }}</div>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ const props = defineProps({
 })
 const checked = ref(props.task.done)
 const id = ref(props.task.id)
+const category = ref(props.task.category)
 
 async function updateTask() {
   try {
@@ -41,3 +42,20 @@ watch(
   }
 )
 </script>
+
+<style scoped>
+
+.Red {
+  background-color: #fca5a5;
+}
+.Yellow {
+  background-color: #faf089;
+}
+.Green {
+  background-color: #9ae6b4;
+}
+.Blue {
+  background-color: #90cdf4;
+}
+
+</style>

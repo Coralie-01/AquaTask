@@ -14,7 +14,7 @@
       <p class="text-xl">Done</p>
       <TaskItem v-for="task in doneTasks" :key="task.id" :task="task"></TaskItem>
     </div>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 my-8">
       <p class="text-xl">To do</p>
       <TaskItem v-for="task in tasks" :key="task.id" :task="task"></TaskItem>
     </div>
