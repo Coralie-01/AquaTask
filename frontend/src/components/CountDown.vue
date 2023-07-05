@@ -3,19 +3,6 @@
     <div v-if="!sessionStarted" class="relative rounded-full w-96 h-96">
       <div class="aquarium absolute bottom-0 w-full rounded-full h-full"></div>
       <!--div class="absolute top-0 bg-base-300 w-full h-1/5 rounded-t-full"></div-->
-      <!--slider
-        v-model="sliderValue"
-        orientation="circular"
-        :min="0"
-        :max="120"
-        :step="3.75"
-        color="hsl(var(--s))"
-        trackColor="hsl(var(--p))"
-        width="20rem"
-        alwaysShowHandle="true"
-        handleScale="6"
-        class="absolute inset-0"
-      /-->
       <round-slider
         v-model="totalMinutes"
         start-angle="132"
