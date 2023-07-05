@@ -17,7 +17,7 @@
           <i class="fi fi-rr-label mx-2"> Category </i>
           <i class="fi fi-rr-bell mx-2"> Notifications </i>
         </div>
-        <button class="btn m-2 btn-secondary" @click="addTask">Add task</button>
+        <button class="btn m-2 btn-info" @click="addTask">Add task</button>
       </div>
     </div>
   </div>
