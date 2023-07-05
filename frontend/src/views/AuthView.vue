@@ -1,6 +1,6 @@
 <template>
-  <div class="auth flex bg-base-200 justify-center items-center h-full">
-    <div class="card lg:card-side bg-base-100 shadow-xl mb-20">
+  <div class="auth flex bg-base-200 justify-center items-center">
+    <div class="card lg:card-side bg-base-100 shadow-xl mb-40">
       <figure><img src="src/assets/logo.png" class="w-96 m-24" alt="Album" /></figure>
       <div class="card-body w-full">
         <h2 class="card-title">Sign in to your account</h2>

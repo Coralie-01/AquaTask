@@ -1,5 +1,5 @@
 <template>
-  <div class="auth flex bg-base-200 justify-center items-center h-full">
+  <div class="auth flex bg-base-200 justify-center items-center">
     <div class="card lg:card-side bg-base-100 shadow-xl mb-40">
       <div class="card-body w-full">
         <h2 class="card-title">Sign up</h2>
