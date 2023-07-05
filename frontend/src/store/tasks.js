@@ -4,7 +4,9 @@ import { defineStore } from 'pinia'
 export const useTasksStore = defineStore('tasks', {
   state: () => ({
     tasks: [],
-    donetasks: []
+    donetasks: [],
+    current_date: '',
+    current_category: ''
   }),
   actions: {
     setTasks(tasks) {
@@ -15,6 +17,8 @@ export const useTasksStore = defineStore('tasks', {
     },
     addTask(task) {
       this.tasks.push(task)
+      this.current_category = none
+      this.current_date = none
     },
     clearTasks() {
       this.tasks = []
@@ -31,6 +35,12 @@ export const useTasksStore = defineStore('tasks', {
         // Add a copy of task to tasks
         this.tasks.push(task)
       }
+    },
+    setCategory(category) {
+      this.current_category = category
+    },
+    setDueDate(date) {
+      this.current_date = date
     }
   }
 })

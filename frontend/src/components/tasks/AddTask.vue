@@ -43,9 +43,13 @@ function handlefocus() {
 async function addTask() {
   try {
     console.log(task.value)
+    console.log(useTasksStore().current_date)
+    console.log(useTasksStore().current_category)
     const response = await axios.post('http://localhost:5000/tasks', {
       description: task.value,
-      user_id: localStorage.getItem('userId')
+      user_id: localStorage.getItem('userId'),
+      due_date: useTasksStore().current_date,
+      category: useTasksStore().current_category,
     })
     useTasksStore().addTask(response.data)
     placeholderText.value = 'Add a task'

@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from flask import jsonify, request
 from app import app, db
 from app.models import Task, User
@@ -62,7 +63,19 @@ def create_task():
         data = request.get_json() # Get data from POST request
         user_id = data['user_id']
         desc = data['description']
-        task = Task(description=desc,user_id=user_id) # Create task
+        cat = data['category']
+        duedate = data['due_date']
+        now = datetime.now()
+        if (duedate == 'Today'):
+            duedate = now
+        elif (duedate == 'Tomorrow'):
+            duedate = now + timedelta(days=1)
+        elif (duedate == 'Next week'):
+            duedate = now + timedelta(days=7)
+        else:
+            duedate = None
+        print(cat,now)
+        task = Task(description=desc,user_id=user_id,category=cat,due_date=duedate, done=False) # Create task
         db.session.add(task) # Add task to database
         db.session.commit() # Commit changes
         return jsonify(task.as_dict) # Return the description of the task and its ID
@@ -114,4 +127,31 @@ def update_task():
         return jsonify(task.as_dict()), 200
     except Exception as e:
         print(f"An error occurred: {e}")
+        return jsonify({'message': 'An error occurred'}), 500
+    
+
+# Route for adding/editing category of task.
+@app.route('/taskcategory',methods=['PUT'])
+def category_task():
+    try:
+        data = request.get_json()
+        task_id, category = data['id'],data['category']
+        task = Task.query.filter_by(id=task_id).first()
+        task.category = category
+        db.session.commit()
+        return jsonify(task.as_dict()),200
+    except Exception as e:
+        return jsonify({'message': 'An error occurred'}), 500
+
+# Route for adding/editing due date of a task.
+@app.route('/taskduedate', methods=['PUT'])
+def due_date_task():
+    try:
+        data = request.get_json()
+        task_id, due_date = data['id'], data['due_date']
+        task = Task.query.filter_by(id=task_id).first()
+        task.due_date = due_date
+        db.session.commit()
+        return jsonify(task.as_dict()), 200
+    except Exception as e:
         return jsonify({'message': 'An error occurred'}), 500

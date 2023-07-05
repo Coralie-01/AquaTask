@@ -28,7 +28,7 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Foreign key to link the task to a user
     description = db.Column(db.String(80), nullable=False)
     category = db.Column(db.String(80), nullable=True)
-    due_date = db.Column(db.DateTime, nullable=True)
+    due_date = db.Column(db.Date, nullable=True)
     done = db.Column(db.Boolean, default=False)
 
     # Method to get the task as a dictionary
