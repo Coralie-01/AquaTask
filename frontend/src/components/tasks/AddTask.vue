@@ -34,6 +34,7 @@ import NotifSelect from '../selects/NotifSelect.vue';
 const showForm = ref(false)
 const placeholderText = ref('Add a task')
 const task = ref('')
+const tasksStore = useTasksStore()
 
 function handlefocus() {
   showForm.value = true
@@ -42,16 +43,16 @@ function handlefocus() {
 
 async function addTask() {
   try {
-    console.log(task.value)
-    console.log(useTasksStore().current_date)
-    console.log(useTasksStore().current_category)
-    const response = await axios.post('http://localhost:5000/tasks', {
+    const cat = tasksStore.current_category
+    const date = tasksStore.current_date
+    const response = await axios.put('http://localhost:5000/tasks', {
       description: task.value,
       user_id: localStorage.getItem('userId'),
-      due_date: useTasksStore().current_date,
-      category: useTasksStore().current_category,
+      category: cat,
+      due_date: date,
+      done: false
     })
-    useTasksStore().addTask(response.data)
+    tasksStore.addTask(response.data)
     placeholderText.value = 'Add a task'
     showForm.value = false
     task.value = ''

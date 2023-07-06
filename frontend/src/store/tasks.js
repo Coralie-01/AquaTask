@@ -10,15 +10,15 @@ export const useTasksStore = defineStore('tasks', {
   }),
   actions: {
     setTasks(tasks) {
-      this.tasks = tasks
+      this.tasks = [...tasks]
     },
     setDoneTasks(donetasks) {
-      this.donetasks = donetasks
-    },
+      this.donetasks = [...donetasks]
+    },    
     addTask(task) {
       this.tasks.push(task)
-      this.current_category = none
-      this.current_date = none
+      this.current_category = ''
+      this.current_date = ''
     },
     clearTasks() {
       this.tasks = []
@@ -41,6 +41,11 @@ export const useTasksStore = defineStore('tasks', {
     },
     setDueDate(date) {
       this.current_date = date
+    }
+  },
+  getters: {
+    isDoneEmpty() {
+      return this.donetasks.length === 0
     }
   }
 })

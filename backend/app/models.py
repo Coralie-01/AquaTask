@@ -1,5 +1,9 @@
+from json import JSONEncoder
+import datetime
+import json
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 # Define the User model
 class User(db.Model):
@@ -38,7 +42,7 @@ class Task(db.Model):
             'user_id': self.user_id,
             'description': self.description,
             'category': self.category,
-            'due_date': self.due_date,
+            'due_date': self.due_date.isoformat() if self.due_date else None,
             'done': self.done
         }
     
@@ -49,4 +53,6 @@ class Task(db.Model):
     # Set task as not done
     def set_not_done(self):
         self.done = False
+
+
 
