@@ -67,26 +67,19 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed } from 'vue'
 import roundSlider from 'vue-three-round-slider'
 
-let sliderValue = ref(15)
-let remainingTime = ref(0)
+let sliderValue = ref(15) // to set up the countdown init time
+let remainingTime = ref(0) // to keep track of the remaining time during session
 let intervalId = null
-let sessionStarted = ref(false)
+let sessionStarted = ref(false) // to switch mode when a session is started
+
 
 //let totalMinutes = computed(() => (120 / 90) * (sliderValue.value - 15))
 let totalMinutes = ref(0)
 
-watch(sliderValue, (newValue) => {
-  if (newValue < 15) {
-    sliderValue.value = 15
-  }
-  if (newValue > 115) {
-    sliderValue.value = 115
-  }
-})
-
+// count down the remaining time
 const startSession = () => {
   console.log('startSession')
   remainingTime.value = totalMinutes.value * 60 // convert minutes to seconds
@@ -100,7 +93,7 @@ const startSession = () => {
     }
   }, 1000)
 }
-
+// back to initial state when abandon session
 const abandonSession = () => {
   if (intervalId) {
     clearInterval(intervalId)
