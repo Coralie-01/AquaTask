@@ -142,3 +142,38 @@ def due_date_task():
         return jsonify(task.as_dict()), 200
     except Exception as e:
         return jsonify({'message': 'An error occurred'}), 500
+
+# Route for deleting done tasks.
+@app.route('/deletetasks/<int:user_id>', methods=['DELETE'])
+def delete_tasks(user_id):
+    try:
+        tasks = Task.query.filter_by(user_id=user_id,done=True).all()
+        for task in tasks:
+            db.session.delete(task)
+        db.session.commit()
+        return jsonify({'message': 'Tasks deleted!'}), 200
+    except Exception as e:
+        return jsonify({'message': 'An error occurred'}), 500
+
+# Route for deleting a task.
+@app.route('/deletetask/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    try:
+        task = Task.query.filter_by(id=task_id).first()
+        db.session.delete(task)
+        db.session.commit()
+        return jsonify({'message': 'Task deleted!'}), 200
+    except Exception as e:
+        return jsonify({'message': 'An error occurred'}), 500
+    
+# Route editing task name.
+@app.route('/taskname/<int:task_id>', methods=['PUT'])
+def edit_task_name(task_id):
+    try:
+        data = request.get_json()
+        task = Task.query.filter_by(id=task_id).first()
+        task.description = data['description']
+        db.session.commit()
+        return 200
+    except Exception as e:
+        return jsonify({'message': 'An error occurred'}), 500

@@ -23,6 +23,9 @@ export const useTasksStore = defineStore('tasks', {
     clearTasks() {
       this.tasks = []
     },
+    clearDoneTasks() {
+      this.donetasks = []
+    },
     updateTask(task) {
       if (task.done) {
         // Remove task from tasks
@@ -41,6 +44,16 @@ export const useTasksStore = defineStore('tasks', {
     },
     setDueDate(date) {
       this.current_date = date
+    },
+    deleteTask(id,done) {
+      if (done) {
+        // Remove task from donetasks
+        this.donetasks = this.donetasks.filter((t) => t.id !== id)
+      }
+      else {
+        // Remove task from tasks
+        this.tasks = this.tasks.filter((t) => t.id !== id)
+      }
     }
   },
   getters: {
