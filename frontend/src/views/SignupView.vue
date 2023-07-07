@@ -1,6 +1,18 @@
 <template>
-  <div class="auth flex bg-base-200 justify-center items-center">
-    <div class="card lg:card-side bg-base-100 shadow-xl mb-40">
+  <div class="auth flex flex-row flex-wrap justify-center items-center">
+    <div class="flex flex-col my-60 px-12 gap-4 text-base-100">
+      <div class="flex-1">
+        <span class="text-7xl">AquaTask</span>
+      </div>
+      <div class="flex-1">
+        <span class="text-3xl">Stay focus, dive into productivity </span>
+      </div>
+      <div class="flex-1">
+        <figure><img src="src/assets/logo.png" class="w-96" alt="Album" /></figure>
+      </div>
+    </div>
+    <div class="shrink">
+    <div class="card card-side bg-base-100 shadow-xl mb-32">
       <div class="card-body w-full">
         <h2 class="card-title">Sign up</h2>
         <div class="form-control w-96">
@@ -45,11 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col mb-60 px-12 gap-4">
-      <span class="text-7xl">AquaTask</span>
-      <span class="text-3xl">Stay focus, dive into productivity </span>
-      <figure><img src="src/assets/logo.png" class="w-96" alt="Album" /></figure>
-    </div>
+  </div>
   </div>
 </template>
 
@@ -81,5 +89,6 @@ async function signup() {
 <style>
 .auth {
   height: calc(100vh - 4.68rem);
+  background: linear-gradient(to bottom, hsl(var(--s)) 0%, #764ba2 100%);
 }
 </style>
