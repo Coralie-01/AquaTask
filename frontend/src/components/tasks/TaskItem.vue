@@ -1,8 +1,16 @@
 <template>
   <div class="py-2">
-    <div class="flex items-center cursor-pointer bg-base-200 shadow-lg px-2 py-2" :class="category">
-      <input v-model="checked" type="checkbox" checked="checked" class="checkbox m-3" />
-      <div type="text" class="w-full">{{ task.description }}</div>
+    <div
+      class="flex cursor-pointer bg-base-200 shadow-lg px-2 py-2 justify-between"
+      :class="category"
+    >
+      <div class="flex flex-row items-center">
+        <input v-model="checked" type="checkbox" checked="checked" class="checkbox m-3" />
+        <div type="text" class="">{{ task.description }}</div>
+      </div>
+      <div type="text" class="text-sm flex items-end">
+        <i class="fi fi-rr-calendar-check mx-1"></i>{{ date }}
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +29,26 @@ const props = defineProps({
 const checked = ref(props.task.done)
 const id = ref(props.task.id)
 const category = toRef(() => props.task.category)
+
+const date = computed(() => {
+  let today = new Date()
+  let tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  let dueDate = new Date(props.task.due_date)
+  // If the due date is today or tomorrow, display "Today" or "Tomorrow"
+  if (+dueDate.setHours(0, 0, 0, 0) === +today.setHours(0, 0, 0, 0)) {
+    return 'Today'
+  } else if (+dueDate.setHours(0, 0, 0, 0) === +tomorrow.setHours(0, 0, 0, 0)) {
+    return 'Tommorow'
+  } else {
+    let formattedDate = dueDate.toLocaleDateString(undefined, {
+      weekday: 'short',
+      month: 'long',
+      day: 'numeric'
+    })
+    return 'Due ' + formattedDate
+  }
+})
 
 async function updateTask() {
   try {
@@ -41,8 +69,6 @@ watch(
     console.log(newChecked)
   }
 )
-
-
 </script>
 
 <style scoped>
