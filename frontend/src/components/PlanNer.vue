@@ -13,17 +13,17 @@
     <div v-if="showDone" class="flex flex-col gap-4">
       <div class="flex flex-row justify-between">
         <p class="text-xl">Done</p>
-        <button class="btn btn-sm btn-accent" @click="clearDoneTasks">Clear</button>
+        <button class="btn btn-sm btn-accent" @click="clearDoneTasks">Clear All</button>
       </div>
       <div v-for="task in DoneTasks" :key="task.id" class="flex flex-row items-center">
-        <TaskItem class="flex-1" :task="task" ></TaskItem>
+        <TaskItem class="flex-1" :task="task"></TaskItem>
         <TaskMenu class="flex-initial" :task="task"></TaskMenu>
       </div>
-      </div>
+    </div>
     <div class="flex flex-col gap-4 my-8">
       <p class="text-xl">To do</p>
       <div v-for="task in Tasks" :key="task.id" class="flex flex-row items-center">
-        <TaskItem  class="flex-1" :task="task"></TaskItem>
+        <TaskItem class="flex-1" :task="task"></TaskItem>
         <TaskMenu class="flex-initial" :task="task"></TaskMenu>
       </div>
     </div>
@@ -47,7 +47,6 @@ defineProps({
     required: true
   }
 })
-
 
 onMounted(async () => {
   try {
@@ -79,7 +78,4 @@ let clearDoneTasks = () => {
   let userId = localStorage.getItem('userId')
   axios.delete(`http://localhost:5000/deletetasks/${userId}`)
 }
-
-
-
 </script>

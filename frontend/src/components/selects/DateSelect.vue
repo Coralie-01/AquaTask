@@ -3,7 +3,7 @@
     <option disabled selected>Due date</option>
     <option>Today</option>
     <option>Tomorrow</option>
-    <option>Next week</option>    
+    <option>Next week</option>
   </select>
 </template>
 
@@ -11,18 +11,16 @@
 import { useTasksStore } from '../../store/tasks'
 
 const updateDueDate = async (event) => {
-  const selectedValue = event.target.value;
+  const selectedValue = event.target.value
   useTasksStore().setDueDate(selectedValue)
-};
-
+}
 </script>
 
 <style scoped>
-
 .select {
-    background-color: transparent;
-    outline: none;
-    border: none;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 .select option {
   background-color: transparent;
@@ -30,6 +28,5 @@ const updateDueDate = async (event) => {
   outline: none;
   border: none;
 }
-
 </style>
 ```

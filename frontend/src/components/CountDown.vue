@@ -9,8 +9,8 @@
         v-model="totalMinutes"
         start-angle="132"
         end-angle="+275"
-        min = "0"
-        max = "120"
+        min="0"
+        max="120"
         line-cap="round"
         radius="200"
         step="5"
@@ -27,8 +27,8 @@
         v-model="remainingTime"
         start-angle="132"
         end-angle="+275"
-        min = "0"
-        max = "7200"
+        min="0"
+        max="7200"
         line-cap="round"
         radius="200"
         step="5"
@@ -38,7 +38,7 @@
         handleSize="+20"
         handleColor="hsl(var(--s))"
         showTooltip="false"
-        readOnly = "true"
+        readOnly="true"
         class="absolute inset-0 left-1/2 transform -translate-x-1/2 top-1/2 transform -translate-y-1/2"
       ></round-slider>
       <div
@@ -47,8 +47,12 @@
       ></div>
       <div class="absolute bottom-40 left-12 small-fish"></div>
       <div class="absolute bottom-52 left-24 small-fish-2"></div>
-      <div class="fish" :class="{'fish-animation': sessionStarted}" >
-        <img src="/src/assets/fish.png" class="absolute bottom-20 w-3/7" style="left: 50%; transform: translateX(-50%)" />
+      <div class="fish" :class="{ 'fish-animation': sessionStarted }">
+        <img
+          src="/src/assets/fish.png"
+          class="absolute bottom-20 w-3/7"
+          style="left: 50%; transform: translateX(-50%)"
+        />
       </div>
     </div>
     <div v-if="!sessionStarted">
@@ -74,7 +78,6 @@ let sliderValue = ref(15) // to set up the countdown init time
 let remainingTime = ref(0) // to keep track of the remaining time during session
 let intervalId = null
 let sessionStarted = ref(false) // to switch mode when a session is started
-
 
 //let totalMinutes = computed(() => (120 / 90) * (sliderValue.value - 15))
 let totalMinutes = ref(0)
@@ -117,7 +120,7 @@ const abandonSession = () => {
   width: 2rem;
   height: 1rem;
   background: hsl(var(--b3));
-  border-radius: 50%; 
+  border-radius: 50%;
   animation: swim 4s ease infinite;
 }
 
@@ -125,7 +128,7 @@ const abandonSession = () => {
   width: 2rem;
   height: 1rem;
   background: hsl(var(--b3));
-  border-radius: 50%; 
+  border-radius: 50%;
   animation: swim 3s ease-out infinite;
 }
 
@@ -150,27 +153,23 @@ const abandonSession = () => {
 }
 
 @keyframes swim-flip {
-
   0% {
-    transform: translateX(0)
-  } 
+    transform: translateX(0);
+  }
   30% {
-    transform: translateX(-4rem)
+    transform: translateX(-4rem);
   }
   40% {
-    transform: rotateY(180deg) translateX(4rem)
+    transform: rotateY(180deg) translateX(4rem);
   }
   60% {
-    transform: translateX(4rem) rotateY(180deg)
+    transform: translateX(4rem) rotateY(180deg);
   }
   80% {
-    transform: translateX(4rem)
+    transform: translateX(4rem);
   }
   100% {
-    transform: translateX(0)
+    transform: translateX(0);
   }
 }
-
-
-
 </style>

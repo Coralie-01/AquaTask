@@ -13,9 +13,9 @@
     <div v-if="showForm">
       <div class="flex justify-between items-center px-2 shadow-inner bg-base-300 rounded-b-sm">
         <div>
-          <i class="fi fi-rr-calendar-check mx-1"> <DateSelect/></i>
-          <i class="fi fi-rr-label mx-1"> <CategorySelect/> </i>
-          <i class="fi fi-rr-bell mx-1"> <NotifSelect/> </i>
+          <i class="fi fi-rr-calendar-check mx-1"> <DateSelect /></i>
+          <i class="fi fi-rr-label mx-1"> <CategorySelect /> </i>
+          <i class="fi fi-rr-bell mx-1"> <NotifSelect /> </i>
         </div>
         <button class="btn m-2 btn-info" @click="addTask">Add task</button>
       </div>
@@ -27,9 +27,9 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useTasksStore } from '../../store/tasks'
-import DateSelect from '../selects/DateSelect.vue';
-import CategorySelect from '../selects/CategorySelect.vue';
-import NotifSelect from '../selects/NotifSelect.vue';
+import DateSelect from '../selects/DateSelect.vue'
+import CategorySelect from '../selects/CategorySelect.vue'
+import NotifSelect from '../selects/NotifSelect.vue'
 
 const showForm = ref(false)
 const placeholderText = ref('Add a task')
