@@ -39,14 +39,14 @@ const date = computed(() => {
   if (+dueDate.setHours(0, 0, 0, 0) === +today.setHours(0, 0, 0, 0)) {
     return 'Today'
   } else if (+dueDate.setHours(0, 0, 0, 0) === +tomorrow.setHours(0, 0, 0, 0)) {
-    return 'Tommorow'
+    return 'Tomorrow'
   } else {
     let formattedDate = dueDate.toLocaleDateString(undefined, {
       weekday: 'short',
       month: 'long',
       day: 'numeric'
     })
-    return 'Due ' + formattedDate
+    return formattedDate
   }
 })
 
