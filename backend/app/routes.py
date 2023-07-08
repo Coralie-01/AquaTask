@@ -118,11 +118,13 @@ def update_task():
     
 
 # Route for adding/editing category of task.
-@app.route('/taskcategory',methods=['PUT'])
-def category_task():
+@app.route('/taskcategory/<int:task_id>',methods=['PUT'])
+def category_task(task_id):
     try:
         data = request.get_json()
-        task_id, category = data['id'],data['category']
+        category = data['category']
+        if category == 'None': # in case of no category
+            category = None
         task = Task.query.filter_by(id=task_id).first()
         task.category = category
         db.session.commit()
@@ -131,11 +133,11 @@ def category_task():
         return jsonify({'message': 'An error occurred'}), 500
 
 # Route for adding/editing due date of a task.
-@app.route('/taskduedate', methods=['PUT'])
-def due_date_task():
+@app.route('/taskduedate/<int:task_id>', methods=['PUT'])
+def due_date_task(task_id):
     try:
         data = request.get_json()
-        task_id, due_date = data['id'], data['due_date']
+        due_date = data['due_date']
         task = Task.query.filter_by(id=task_id).first()
         task.due_date = due_date
         db.session.commit()

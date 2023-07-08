@@ -14,7 +14,7 @@ export const useTasksStore = defineStore('tasks', {
     },
     setDoneTasks(donetasks) {
       this.donetasks = [...donetasks]
-    },    
+    },
     addTask(task) {
       this.tasks.push(task)
       this.current_category = ''
@@ -45,14 +45,27 @@ export const useTasksStore = defineStore('tasks', {
     setDueDate(date) {
       this.current_date = date
     },
-    deleteTask(id,done) {
+    deleteTask(id, done) {
       if (done) {
         // Remove task from donetasks
         this.donetasks = this.donetasks.filter((t) => t.id !== id)
-      }
-      else {
+      } else {
         // Remove task from tasks
         this.tasks = this.tasks.filter((t) => t.id !== id)
+      }
+    },
+    updateCategory(task, id, newcat, done) {
+      let newTask = { ...task, category: newcat }
+      if (done) {
+        // Find the index of the task in the donetasks array
+        let index = this.donetasks.findIndex((task) => task.id === id)
+        // Update the task in the donetasks array
+        this.donetasks.splice(index, 1, newTask)
+      } else {
+        // Find the index of the task in the tasks array
+        let index = this.tasks.findIndex((task) => task.id === id)
+        // Update the task in the tasks array
+        this.tasks.splice(index, 1, newTask)
       }
     }
   },
