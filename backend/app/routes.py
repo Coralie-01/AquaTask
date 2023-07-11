@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta
-from flask import jsonify, request
-from app import app, db
+from flask import jsonify, request, redirect
+from app import app, db, startup
 from app.models import Task, User
 from werkzeug.security import generate_password_hash, check_password_hash
+
+
+
+########## Authentifications routes ##########
 
 # Define a route for register a user
 @app.route('/register', methods=['POST'])
@@ -54,7 +58,7 @@ def auth():
         return jsonify({'message': 'An error occurred'}), 500
 
 
-
+########## Tasks routes ##########
 
 # Define a route for creating tasks, which accepts POST requests
 @app.route('/tasks', methods=['GET', 'POST','PUT'])
@@ -179,3 +183,27 @@ def edit_task_name(task_id):
         return 200
     except Exception as e:
         return jsonify({'message': 'An error occurred'}), 500
+    
+
+
+########## Spotify routes ##########
+
+
+
+@app.route('/spotifylogin')
+def spotifylogin():
+    print("spotifylogin")
+    response = startup.getUser()
+    return redirect(response)
+
+@app.route('/callback/')
+def callback():
+    print("spotifycallback")
+    startup.getUserToken(request.args['code'])
+    return redirect('http://localhost:5173/')
+
+@app.route('/getAccessToken')
+def get_access_token():
+    access_token = startup.getAccessToken()  # Retrieve the access token from the TOKEN_DATA
+    return {'access_token': access_token}
+
