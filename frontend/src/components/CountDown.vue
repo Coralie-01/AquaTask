@@ -67,6 +67,7 @@
     </div>
     <button v-if="!sessionStarted" class="btn btn-info" @click="startSession">Start Session</button>
     <button v-else class="btn btn-accent" @click="abandonSession">Abandon</button>
+    <span v-if="sessionStarted" class="text-2xl text-center">Congrats, you have stayed focus for {{ spentMinutes }} mins and {{ spentSeconds }} seconds.</span>
   </div>
 </template>
 
@@ -82,9 +83,15 @@ let sessionStarted = ref(false) // to switch mode when a session is started
 //let totalMinutes = computed(() => (120 / 90) * (sliderValue.value - 15))
 let totalMinutes = ref(0)
 
+
+let spentMinutes = computed(() => Math.floor(totalMinutes.value - (remainingTime.value % 36000 / 60)))
+let spentSeconds = computed(() => Math.floor((60 - (remainingTime.value ) % 60)))
+
 // count down the remaining time
 const startSession = () => {
-  console.log('startSession')
+  if(totalMinutes.value === 0) {
+    return
+  }
   remainingTime.value = totalMinutes.value * 60 // convert minutes to seconds
   sessionStarted.value = true
   intervalId = setInterval(() => {
