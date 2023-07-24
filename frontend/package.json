@@ -15,6 +15,7 @@
     "@flaticon/flaticon-uicons": "^2.2.0",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
+    "gsap": "^3.12.2",
     "pinia": "^2.1.4",
     "v-calendar": "^3.0.3",
     "vue": "^3.3.4",

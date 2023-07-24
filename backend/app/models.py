@@ -11,6 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Unique identifier for each user
     email = db.Column(db.String(120), nullable=False)  # Email address for the user
     password_hash = db.Column(db.String(128))  # Hashed password for the user
+    #n_fish = db.Column(db.Integer, default=0)  # Number of fish the user has caught
 
     # Method to set the hashed password
     def set_password(self, password):

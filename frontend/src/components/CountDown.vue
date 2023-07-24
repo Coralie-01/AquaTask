@@ -2,7 +2,8 @@
   <div class="flex flex-col items-center gap-32">
     <div class="relative rounded-full w-96 h-96">
       <div class="aquarium absolute bottom-0 w-full rounded-full h-full"></div>
-      <div class="water absolute bottom-0 w-full rounded-full h-full"></div>
+      <div v-if="isFishAlive" class="water absolute bottom-0 w-full rounded-full h-full"></div>
+      <div v-else class="water absolute bottom-0 w-full rounded-full h-full water-animation"></div>
       <!--div class="absolute top-0 bg-base-300 w-full h-1/5 rounded-t-full"></div-->
       <round-slider
         v-if="!sessionStarted"
@@ -47,10 +48,17 @@
       ></div>
       <div class="absolute bottom-40 left-12 small-fish"></div>
       <div class="absolute bottom-52 left-24 small-fish-2"></div>
-      <div class="fish" :class="{ 'fish-animation': sessionStarted }">
+      <div v-if="isFishAlive" class="fish" :class="{ 'fish-animation': sessionStarted }">
         <img
           src="/src/assets/fish.png"
           class="absolute bottom-20 w-3/7"
+          style="left: 50%; transform: translateX(-50%)"
+        />
+      </div>
+      <div v-else >
+        <img
+          src="/src/assets/Vector.png"
+          class="absolute bottom-20"
           style="left: 50%; transform: translateX(-50%)"
         />
       </div>
@@ -74,6 +82,22 @@
 <script setup>
 import { ref, computed } from 'vue'
 import roundSlider from 'vue-three-round-slider'
+
+let isFishAlive = ref(true)
+
+const handleVisibilityChange = () => {
+  if (!sessionStarted.value) {
+    isFishAlive.value = true
+    return
+  }
+  if (document.visibilityState === 'hidden') {
+    console.log('hidden')
+    isFishAlive.value = false
+  }
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange)
+
 
 let sliderValue = ref(15) // to set up the countdown init time
 let remainingTime = ref(0) // to keep track of the remaining time during session
@@ -111,6 +135,7 @@ const abandonSession = () => {
   }
   remainingTime.value = totalMinutes.value * 60
   sessionStarted.value = false
+  isFishAlive.value = true
 }
 </script>
 
@@ -179,4 +204,5 @@ const abandonSession = () => {
     transform: translateX(0);
   }
 }
+
 </style>

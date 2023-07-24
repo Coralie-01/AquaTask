@@ -194,13 +194,14 @@ def edit_task_name(task_id):
 def spotifylogin():
     print("spotifylogin")
     response = startup.getUser()
+    print(response)
     return redirect(response)
 
 @app.route('/callback/')
 def callback():
     print("spotifycallback")
     startup.getUserToken(request.args['code'])
-    return redirect('http://localhost:5173/')
+    return redirect('http://localhost:5173/study')
 
 @app.route('/getAccessToken')
 def get_access_token():
